@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ConectaSalud Senior | Prototipo</title>
+<meta name="description" content="Prototipo de agendamiento asistido de horas médicas en atención primaria para personas mayores.">
+<style>
+:root{
+  --navy:#1F467B; --navy-d:#163357; --light:#DCE6F2; --gold:#C9A86A;
+  --green:#2E7D32; --green-d:#1B5E20; --red:#C62828; --orange:#EF6C00; --sun:#F9A825;
+  --ink:#1b1f24; --muted:#5b6470; --bg:#F6F8FB; --card:#fff; --line:#D5DEEA;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+a{color:var(--navy)}
+header.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.brand{font-weight:800;letter-spacing:.3px;font-size:18px}
+.brand span{color:var(--gold)}
+nav.menu{display:flex;gap:4px;flex-wrap:wrap}
+nav.menu a{color:#fff;text-decoration:none;font-size:14px;padding:6px 10px;border-radius:6px}
+nav.menu a:hover,nav.menu a:focus{background:rgba(255,255,255,.15)}
+.wrap{max-width:1100px;margin:0 auto}
+section{scroll-margin-top:70px;padding:56px 16px;border-bottom:1px solid var(--line)}
+section:nth-of-type(even){background:#fff}
+.kicker{color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;font-size:13px;margin:0 0 6px}
+h1{font-size:clamp(28px,5vw,46px);line-height:1.12;margin:0 0 14px;color:#fff}
+h2{font-size:clamp(24px,3.6vw,34px);line-height:1.2;margin:0 0 14px;color:var(--navy)}
+h3{margin:0 0 8px;color:var(--navy)}
+.hero{background:linear-gradient(135deg,var(--navy-d),var(--navy));color:#fff;border-bottom:5px solid var(--gold)}
+.hero p.lead{font-size:clamp(17px,2.2vw,21px);max-width:760px;opacity:.95}
+.btn-cta{display:inline-block;background:var(--green);color:#fff;font-weight:700;text-decoration:none;padding:14px 22px;border-radius:10px;margin-top:10px}
+.btn-cta:hover{background:var(--green-d)}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.stat{font-size:44px;font-weight:800;color:var(--navy);line-height:1}
+.stat small{font-size:18px}
+.muted{color:var(--muted);font-size:14px}
+.quote{border-left:4px solid var(--gold);padding:8px 14px;background:#FBF7EF;border-radius:0 10px 10px 0;font-style:italic;margin:10px 0}
+table.cmp{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border-radius:12px;overflow:hidden}
+table.cmp th{background:var(--navy);color:#fff;text-align:left;padding:10px}
+table.cmp td{border-top:1px solid var(--line);padding:10px;vertical-align:top}
+table.cmp td.y{color:var(--green);font-weight:700}
+table.cmp td.n{color:var(--red);font-weight:700}
+.tablewrap{overflow-x:auto}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--light);color:var(--navy)}
+
+/* ---- demo ---- */
+.demo{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.demo{grid-template-columns:1fr}}
+.device{background:#2b2b2b;border-radius:28px;padding:16px;box-shadow:0 18px 40px rgba(0,0,0,.25);max-width:420px;width:100%;margin:0 auto}
+.screen{background:#fff;border-radius:14px;overflow:hidden;min-height:620px;display:flex;flex-direction:column;position:relative}
+.sbar{background:var(--navy);color:#fff;font-weight:800;text-align:center;padding:14px 10px;font-size:18px;letter-spacing:.3px}
+.progress{display:flex;gap:6px;justify-content:center;padding:8px 0 0;background:var(--navy)}
+.progress i{width:34px;height:6px;border-radius:3px;background:rgba(255,255,255,.3)}
+.progress i.on{background:var(--gold)}
+.sbody{flex:1;padding:18px;display:flex;flex-direction:column;gap:14px}
+.big{font-size:28px;font-weight:800;text-align:center;line-height:1.2;margin:8px 0}
+.free{text-align:center;color:var(--navy);font-weight:700;background:var(--light);border-radius:8px;padding:8px;font-size:17px}
+.k{border:none;border-radius:12px;font-weight:800;cursor:pointer;min-height:80px;font-size:22px;font-family:inherit;transition:transform .06s,background .15s}
+.k:active{transform:scale(.97)}
+.k:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.k.primary{background:var(--green);color:#fff}
+.k.help{background:var(--red);color:#fff;min-height:64px;font-size:19px}
+.k.soft{background:var(--light);color:var(--navy)}
+.k.grey{background:#9E9E9E;color:#fff;min-height:64px;font-size:18px}
+.k.navyb{background:var(--navy);color:#fff;font-size:18px;min-height:68px}
+.k.sun{background:var(--sun);color:#3E2723}
+.k.dusk{background:var(--orange);color:#fff}
+.k.sel{background:var(--navy)!important;color:#fff!important;position:relative}
+.k.sel::after{content:"✓";position:absolute;top:6px;right:10px;font-size:20px}
+.k[disabled]{opacity:.45;cursor:not-allowed}
+.rut{font-size:30px;font-weight:800;text-align:center;letter-spacing:2px;border:3px solid var(--line);border-radius:10px;padding:12px;min-height:64px;background:#F7F9FC}
+.rut.err{border-color:var(--red)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lbl{font-weight:800;font-size:19px;text-align:center;margin:4px 0 0}
+.msg{min-height:22px;text-align:center;color:var(--red);font-weight:700;font-size:16px}
+.ticket{border:2px dashed var(--navy);border-radius:10px;padding:14px;font-size:18px;background:#FAFCFF}
+.ticket b{font-size:20px}
+.seal{display:inline-block;background:var(--green);color:#fff;font-weight:800;border-radius:6px;padding:4px 10px;font-size:15px}
+.toast{position:absolute;left:12px;right:12px;bottom:12px;background:#25D366;color:#073b1c;font-weight:700;border-radius:12px;padding:12px 14px;box-shadow:0 8px 20px rgba(0,0,0,.2);transform:translateY(calc(100% + 30px));transition:transform .3s;font-size:15px}
+.toast.show{transform:none}
+.printout{position:absolute;left:50%;top:0;width:78%;transform:translate(-50%,-110%);background:#fff;border:1px solid #ccc;box-shadow:0 6px 18px rgba(0,0,0,.25);padding:12px;font-size:14px;font-family:monospace;transition:transform .9s ease;z-index:3}
+.printout.show{transform:translate(-50%,6%)}
+.overlay{position:absolute;inset:0;background:rgba(15,30,55,.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
+.overlay.show{display:flex}
+.overlay .box{background:#fff;border-radius:14px;padding:22px;text-align:center;font-size:19px}
+.side .card{margin-bottom:14px}
+.sim{font-size:12px;font-weight:700;color:#8a5a00;background:#FFF3CD;border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:middle}
+ol.steps{padding-left:20px;margin:6px 0}
+footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
+.restart{background:none;border:2px solid var(--navy);color:var(--navy);font-weight:700;border-radius:8px;padding:8px 14px;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">ConectaSalud <span>Senior</span></div>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#problema">Problema</a><a href="#solucion">Solución</a><a href="#usuario">Usuario</a><a href="#valor">Valor</a><a href="#impacto">Impacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Prototipo de innovación social</p>
+    <h1>Pedir una hora médica no debería costar una madrugada en la fila</h1>
+    <p class="lead">ConectaSalud Senior es un agendamiento asistido para personas mayores en los CESFAM: tres pasos, letra grande, ayuda a mano y un comprobante que llega también a la familia.</p>
+    <a class="btn-cta" href="#solucion">Probar la demostración</a>
+  </div>
+</section>
+
+<section id="problema">
+  <div class="wrap">
+    <p class="kicker">1. Problema</p>
+    <h2>La hora médica se sigue ganando en la fila</h2>
+    <p>Antes de que abra el CESFAM, personas mayores esperan en la vereda, muchas veces con frío, para conseguir una hora. El agendamiento remoto existe desde 2019, pero exige RUT, Clave Única y manejar un navegador. Los teléfonos se saturan y las páginas fueron pensadas para otro tipo de usuario.</p>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="card"><div class="stat">23<small> %</small></div><p>de las personas mayores realiza trámites por internet.</p></div>
+      <div class="card"><div class="stat">&lt;5<small> %</small></div><p>entre quienes tienen 80 años o más.</p></div>
+      <div class="card"><div class="stat">29<small> %</small></div><p>busca información de salud en línea.</p></div>
+    </div>
+    <p class="muted">Fuente: Sexta Encuesta Nacional Calidad de Vida en la Vejez 2022, Pontificia Universidad Católica de Chile y Caja Los Andes (2023).</p>
+    <p><b>Lo que observamos en terreno:</b> el obstáculo no es la falta de cupos, sino el miedo a equivocarse, a borrar algo o a irse sin un comprobante.</p>
+  </div>
+</section>
+
+<section id="solucion">
+  <div class="wrap">
+    <p class="kicker">2. Solución</p>
+    <h2>Pruebe el flujo de reserva</h2>
+    <div class="demo">
+      <div class="device" aria-label="Simulación de tótem">
+        <div class="screen" id="screen" aria-live="polite"></div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h3>Cómo probarlo</h3>
+          <ol class="steps">
+            <li>Toque <b>Toque aquí para comenzar</b>.</li>
+            <li>Escriba un RUT, por ejemplo <b>12345678K</b>.</li>
+            <li>Elija el tipo de atención y la jornada.</li>
+            <li>Imprima el comprobante o envíelo por WhatsApp a un familiar.</li>
+          </ol>
+          <button class="restart" onclick="go('welcome')">Reiniciar demostración</button>
+        </div>
+        <div class="card">
+          <h3>Qué es real y qué es simulado</h3>
+          <p>Las pantallas, los botones, el teclado, la selección de jornada y la retroalimentación al tocar funcionan. La validación del RUT, la agenda del CESFAM, la impresión y el envío por WhatsApp están <span class="sim">simulados</span>: no hay conexión con sistemas reales ni se guarda ningún dato.</p>
+        </div>
+        <div class="card">
+          <h3>Ajustes tras la validación</h3>
+          <p>Bloques <b>Mañana</b> y <b>Tarde</b> en vez de horas de 24 horas, cambio de color con ✓ y sonido al tocar, y rótulo de <b>servicio gratuito</b> con el sello del CESFAM en la confirmación.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="usuario">
+  <div class="wrap">
+    <p class="kicker">3. Usuario</p>
+    <h2>Personas mayores que quieren autonomía, no más tecnología</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Doña Rosa, 73 años</h3>
+        <p>Jubilada del comercio, con artrosis en las manos y presbicia. Usa WhatsApp con su familia, pero no recuerda claves. Quiere asegurar sus controles sin pasar frío ni molestar a sus hijos.</p>
+        <p class="muted">Arquetipo construido a partir de entrevistas semiestructuradas.</p>
+      </div>
+      <div class="card">
+        <h3>Lo que dijeron en las pruebas</h3>
+        <p class="quote">"Los botones son grandes y te va diciendo qué hacer. Con un papel en la mano me voy tranquilo."</p>
+        <p class="quote">"Sin lentes las horas se ven parecidas; mejor que diga en la mañana o en la tarde."</p>
+        <p class="muted">También participan el familiar o vecino que recibe la confirmación y el funcionario del CESFAM que ayuda en el tótem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="valor">
+  <div class="wrap">
+    <p class="kicker">4. Valor</p>
+    <h2>Por qué funciona mejor que las alternativas</h2>
+    <div class="tablewrap">
+    <table class="cmp">
+      <thead><tr><th></th><th>Fila presencial</th><th>Teléfono</th><th>Web con Clave Única</th><th>ConectaSalud Senior</th></tr></thead>
+      <tbody>
+        <tr><td>Sin madrugar ni esperar afuera</td><td class="n">No</td><td class="y">Sí</td><td class="y">Sí</td><td class="y">Sí</td></tr>
+        <tr><td>Sin claves ni descargas</td><td class="y">Sí</td><td class="y">Sí</td><td class="n">No</td><td class="y">Sí</td></tr>
+        <tr><td>Ayuda de una persona cerca</td><td class="y">Sí</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td></tr>
+        <tr><td>Comprobante en papel</td><td class="y">Sí</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td></tr>
+        <tr><td>Aviso a la familia</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section id="impacto">
+  <div class="wrap">
+    <p class="kicker">5. Impacto</p>
+    <h2>Menos esperas de madrugada, más tranquilidad</h2>
+    <div class="grid g3">
+      <div class="card"><span class="pill">Meta</span><div class="stat" style="margin-top:8px">85<small> %</small></div><p>completa la reserva sin ayuda.</p></div>
+      <div class="card"><span class="pill">Meta</span><div class="stat" style="margin-top:8px">&lt;90<small> s</small></div><p>tiempo promedio por reserva.</p></div>
+      <div class="card"><span class="pill">Meta</span><div class="stat" style="margin-top:8px">90<small> %</small></div><p>califica la experiencia como tranquila y clara.</p></div>
+    </div>
+    <p style="margin-top:18px"><b>Próximos pasos:</b> pantalla para cuando no hay horas, botón para llamar al orientador, prueba en sala de espera con 15 personas mayores (al menos cinco de 80 años o más) y estimación de costos para un piloto en un CESFAM.</p>
+    <p class="muted">Las metas son criterios de evaluación del piloto, no resultados obtenidos.</p>
+  </div>
+</section>
+
+<footer>
+  ConectaSalud Senior · Taller de Innovación y Emprendimiento · Universidad San Sebastián, Programa Advance · Céssar Leiva Núñez · 2026
+</footer>
+
+<script>
+var state = {rut:"", tipo:"", jornada:""};
+var actx = null;
+function beep(){
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    var o = actx.createOscillator(), g = actx.createGain();
+    o.frequency.value = 880; g.gain.value = 0.08;
+    o.connect(g); g.connect(actx.destination);
+    o.start(); o.stop(actx.currentTime + 0.09);
+  }catch(e){}
+}
+function bar(step){
+  var t = {welcome:"CONECTASALUD SENIOR", rut:"PASO 1 DE 3: SU RUT", tipo:"PASO 2 DE 3: ¿A QUÉ VIENE?", ok:"PASO 3 DE 3: HORA RESERVADA", nohay:"SIN HORAS EN ESA JORNADA"}[step];
+  var n = {welcome:0, rut:1, tipo:2, ok:3, nohay:2}[step];
+  var p = "";
+  for (var i = 1; i <= 3; i++) p += '<i class="' + (i <= n ? "on" : "") + '"></i>';
+  return '<div class="sbar">' + t + '</div>' + (n ? '<div class="progress">' + p + '</div>' : "");
+}
+function help(){
+  return '<div class="overlay" id="ov"><div class="box"><p><b>Un orientador viene en camino.</b></p><p>Quédese frente a la pantalla, por favor.</p><button class="k soft" style="width:100%" onclick="tap(this);document.getElementById(\'ov\').classList.remove(\'show\')">Entendido</button></div></div>';
+}
+function fmtRut(r){
+  if (r.length < 2) return r;
+  var body = r.slice(0, -1), dv = r.slice(-1), out = "";
+  while (body.length > 3){ out = "." + body.slice(-3) + out; body = body.slice(0, -3); }
+  return body + out + "-" + dv;
+}
+function tap(el){
+  beep();
+  if (el && el.classList){ el.classList.add("sel"); }
+}
+function go(step){
+  var s = document.getElementById("screen");
+  var h = "";
+  if (step === "welcome"){
+    state = {rut:"", tipo:"", jornada:""};
+    h = bar(step) + '<div class="sbody">'
+      + '<div class="big">Obtenga su hora<br>médica aquí</div>'
+      + '<div class="free">Servicio gratuito de salud pública</div>'
+      + '<button class="k primary" style="min-height:140px;font-size:26px" onclick="tap(this);setTimeout(function(){go(\'rut\')},250)">TOQUE AQUÍ<br>PARA COMENZAR</button>'
+      + '<div style="flex:1"></div>'
+      + '<button class="k help" onclick="beep();document.getElementById(\'ov\').classList.add(\'show\')">PEDIR AYUDA</button>'
+      + '</div>' + help();
+  }
+  if (step === "rut"){
+    var keys = ["1","2","3","4","5","6","7","8","9","K","0","⌫"];
+    var pad = keys.map(function(k){
+      return '<button class="k soft" aria-label="' + (k === "⌫" ? "Borrar" : k) + '" onclick="key(this,\'' + k + '\')">' + k + '</button>';
+    }).join("");
+    h = bar(step) + '<div class="sbody">'
+      + '<div class="lbl">Escriba su RUT</div>'
+      + '<div class="rut" id="rut">' + (fmtRut(state.rut) || "&nbsp;") + '</div>'
+      + '<div class="msg" id="msg"></div>'
+      + '<div class="pad">' + pad + '</div>'
+      + '<div class="row2"><button class="k grey" onclick="tap(this);go(\'welcome\')">VOLVER</button>'
+      + '<button class="k primary" style="min-height:64px;font-size:18px" onclick="checkRut(this)">CONTINUAR</button></div>'
+      + '</div>';
+  }
+  if (step === "tipo"){
+    var tipos = [["Médico general","MÉDICO<br>GENERAL"],["Control crónico","CONTROL<br>CRÓNICO"],["Enfermería","ENFERMERÍA<br>CURACIÓN"],["Recetas","RECETAS<br>FARMACIA"]];
+    h = bar(step) + '<div class="sbody">'
+      + '<div class="lbl">¿A qué atención viene?</div>'
+      + '<div class="row2">' + tipos.map(function(t){
+          return '<button class="k soft" style="font-size:17px" onclick="pick(this,\'tipo\',\'' + t[0] + '\')">' + t[1] + '</button>';
+        }).join("") + '</div>'
+      + '<div class="lbl">Elija el momento del día</div>'
+      + '<div class="row2">'
+      + '<button class="k sun" onclick="pick(this,\'jornada\',\'Mañana\')">☀ MAÑANA</button>'
+      + '<button class="k dusk" onclick="pick(this,\'jornada\',\'Tarde\')">🌇 TARDE</button></div>'
+      + '<div class="msg" id="msg"></div>'
+      + '<div class="row2"><button class="k grey" onclick="tap(this);go(\'rut\')">VOLVER</button>'
+      + '<button class="k primary" style="min-height:64px;font-size:18px" onclick="confirmPick(this)">CONTINUAR</button></div>'
+      + '</div>';
+  }
+  if (step === "nohay"){
+    h = bar(step) + '<div class="sbody">'
+      + '<div class="big" style="font-size:24px">Ya no quedan horas de ' + state.tipo.toLowerCase() + ' en la tarde</div>'
+      + '<p style="font-size:19px;text-align:center">Puede elegir la mañana o quedar en lista de espera. Le avisaremos por WhatsApp si se libera una hora.</p>'
+      + '<button class="k sun" onclick="tap(this);state.jornada=\'Mañana\';setTimeout(function(){go(\'ok\')},250)">☀ VER HORAS DE LA MAÑANA</button>'
+      + '<button class="k navyb" onclick="tap(this);toast(\'Quedó en lista de espera. Le avisaremos por WhatsApp. (simulado)\')">LISTA DE ESPERA</button>'
+      + '<div style="flex:1"></div>'
+      + '<button class="k grey" onclick="tap(this);go(\'tipo\')">VOLVER</button>'
+      + '</div><div class="toast" id="toast"></div>';
+  }
+  if (step === "ok"){
+    var hora = state.jornada === "Mañana" ? "10:30 de la mañana" : "15:00 de la tarde";
+    h = bar(step) + '<div class="sbody">'
+      + '<div style="text-align:center"><span class="seal">✓ RESERVADA · CESFAM</span></div>'
+      + '<div class="ticket">Paciente: Juan Pérez<br>RUT: ' + fmtRut(state.rut) + '<br>Atención: ' + state.tipo + ', box 4<br><b>Jueves 12 de noviembre</b><br><b>' + hora + '</b><br>Llegue 15 minutos antes</div>'
+      + '<div class="free" style="font-size:15px">Su hora ya está guardada. Puede irse tranquilo.</div>'
+      + '<button class="k navyb" onclick="tap(this);printTicket()">🖨 IMPRIMIR COMPROBANTE</button>'
+      + '<button class="k primary" style="min-height:68px;font-size:18px" onclick="tap(this);toast(\'Mensaje enviado al familiar registrado (simulado)\')">ENVIAR WHATSAPP A FAMILIAR</button>'
+      + '<button class="k grey" onclick="tap(this);go(\'welcome\')">FINALIZAR</button>'
+      + '</div><div class="printout" id="po">CESFAM · ConectaSalud<br>------------------<br>' + state.tipo + '<br>Jue 12-nov · ' + hora + '<br>Box 4<br>------------------<br>Llegar 15 min antes</div>'
+      + '<div class="toast" id="toast"></div>';
+  }
+  s.innerHTML = h;
+}
+function key(el, k){
+  beep();
+  el.classList.add("sel"); setTimeout(function(){ el.classList.remove("sel"); }, 180);
+  if (k === "⌫") state.rut = state.rut.slice(0, -1);
+  else if (state.rut.length < 9){
+    if (k === "K" && state.rut.length < 7) return;
+    if (state.rut.slice(-1) === "K") return;
+    state.rut += k;
+  }
+  var r = document.getElementById("rut");
+  r.innerHTML = fmtRut(state.rut) || "&nbsp;"; r.classList.remove("err");
+  document.getElementById("msg").textContent = "";
+}
+function checkRut(el){
+  beep();
+  if (state.rut.length < 8){
+    document.getElementById("rut").classList.add("err");
+    document.getElementById("msg").textContent = "Le faltan números. Revise y vuelva a tocar Continuar.";
+    return;
+  }
+  el.classList.add("sel"); setTimeout(function(){ go("tipo"); }, 250);
+}
+function pick(el, field, val){
+  beep();
+  var row = el.parentNode;
+  Array.prototype.forEach.call(row.querySelectorAll(".k"), function(b){ b.classList.remove("sel"); });
+  el.classList.add("sel");
+  state[field] = val;
+  document.getElementById("msg").textContent = "";
+}
+function confirmPick(el){
+  beep();
+  if (!state.tipo || !state.jornada){
+    document.getElementById("msg").textContent = !state.tipo ? "Elija el tipo de atención." : "Elija mañana o tarde.";
+    return;
+  }
+  el.classList.add("sel");
+  var next = (state.jornada === "Tarde" && state.tipo === "Control crónico") ? "nohay" : "ok";
+  setTimeout(function(){ go(next); }, 250);
+}
+function toast(t){
+  var e = document.getElementById("toast"); if (!e) return;
+  e.textContent = t; e.classList.add("show");
+  setTimeout(function(){ e.classList.remove("show"); }, 2800);
+}
+function printTicket(){
+  var p = document.getElementById("po"); if (!p) return;
+  p.classList.add("show");
+  setTimeout(function(){ p.classList.remove("show"); }, 3000);
+}
+go("welcome");
+</script>
+</body>
+</html>
