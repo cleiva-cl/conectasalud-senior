@@ -50,10 +50,31 @@ table.cmp td.n{color:var(--red);font-weight:700}
 .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--light);color:var(--navy)}
 
 /* ---- demo ---- */
-.demo{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:start}
-@media (max-width:820px){.demo{grid-template-columns:1fr}}
-.device{background:#2b2b2b;border-radius:28px;padding:16px;box-shadow:0 18px 40px rgba(0,0,0,.25);max-width:420px;width:100%;margin:0 auto}
-.screen{background:#fff;border-radius:14px;overflow:hidden;min-height:620px;display:flex;flex-direction:column;position:relative}
+.demo{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.demo{grid-template-columns:1fr}}
+.kiosk-wrap{display:flex;flex-direction:column;align-items:center;max-width:440px;width:100%;margin:0 auto}
+.klabel{font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--navy);background:var(--light);border-radius:999px;padding:5px 14px;margin-bottom:10px}
+.kiosk{background:linear-gradient(180deg,#3a3f47,#24282e);border-radius:22px 22px 10px 10px;padding:18px 18px 0;width:100%;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.kcam{width:10px;height:10px;border-radius:50%;background:#555;margin:-8px auto 8px}
+.screen{background:#fff;border-radius:8px;overflow:hidden;min-height:600px;display:flex;flex-direction:column;position:relative}
+.printer{position:relative;height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.slot{width:62%;height:10px;background:#0d0f12;border-radius:6px;box-shadow:inset 0 2px 4px rgba(0,0,0,.8)}
+.slotlbl{color:#c9ced6;font-size:12px;margin-top:6px;letter-spacing:.5px}
+.paper{position:absolute;top:40px;left:50%;width:56%;transform:translateX(-50%);background:#fff;font-family:monospace;font-size:13px;line-height:1.35;padding:0 12px;max-height:0;overflow:hidden;transition:max-height 1.2s ease,padding .3s;box-shadow:0 8px 16px rgba(0,0,0,.25);z-index:4;border-radius:0 0 4px 4px}
+.paper.show{max-height:260px;padding:10px 12px}
+.paper b{font-size:15px}
+.neck{width:34%;height:120px;background:linear-gradient(90deg,#2a2e35,#3d424a,#2a2e35)}
+.base{width:78%;height:22px;background:#2a2e35;border-radius:10px 10px 4px 4px;box-shadow:0 10px 18px rgba(0,0,0,.2)}
+.phone-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:18px}
+.phone{width:270px;background:#1f2328;border-radius:34px;padding:12px;box-shadow:0 12px 28px rgba(0,0,0,.22)}
+.wa{background:#ECE5DD;border-radius:24px;overflow:hidden;height:340px;display:flex;flex-direction:column}
+.wahead{background:#075E54;color:#fff;padding:12px 14px;font-weight:700;font-size:15px}
+.wahead small{display:block;font-weight:400;opacity:.85;font-size:12px}
+.wabody{flex:1;padding:12px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.bubble{background:#fff;border-radius:0 10px 10px 10px;padding:8px 10px;font-size:13.5px;line-height:1.4;max-width:92%;box-shadow:0 1px 1px rgba(0,0,0,.1);animation:pop .3s ease}
+.bubble .t{display:block;text-align:right;color:#888;font-size:11px;margin-top:4px}
+.waempty{color:#6b6b6b;font-size:13px;text-align:center;margin:auto 10px}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
 .sbar{background:var(--navy);color:#fff;font-weight:800;text-align:center;padding:14px 10px;font-size:18px;letter-spacing:.3px}
 .progress{display:flex;gap:6px;justify-content:center;padding:8px 0 0;background:var(--navy)}
 .progress i{width:34px;height:6px;border-radius:3px;background:rgba(255,255,255,.3)}
@@ -85,8 +106,6 @@ table.cmp td.n{color:var(--red);font-weight:700}
 .seal{display:inline-block;background:var(--green);color:#fff;font-weight:800;border-radius:6px;padding:4px 10px;font-size:15px}
 .toast{position:absolute;left:12px;right:12px;bottom:12px;background:#25D366;color:#073b1c;font-weight:700;border-radius:12px;padding:12px 14px;box-shadow:0 8px 20px rgba(0,0,0,.2);transform:translateY(calc(100% + 30px));transition:transform .3s;font-size:15px}
 .toast.show{transform:none}
-.printout{position:absolute;left:50%;top:0;width:78%;transform:translate(-50%,-110%);background:#fff;border:1px solid #ccc;box-shadow:0 6px 18px rgba(0,0,0,.25);padding:12px;font-size:14px;font-family:monospace;transition:transform .9s ease;z-index:3}
-.printout.show{transform:translate(-50%,6%)}
 .overlay{position:absolute;inset:0;background:rgba(15,30,55,.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
 .overlay.show{display:flex}
 .overlay .box{background:#fff;border-radius:14px;padding:22px;text-align:center;font-size:19px}
@@ -135,29 +154,45 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
 <section id="solucion">
   <div class="wrap">
     <p class="kicker">2. Solución</p>
-    <h2>Pruebe el flujo de reserva</h2>
+    <h2>Pruebe el tótem de autoatención</h2>
+    <p>La reserva se hace en un tótem instalado en el hall del CESFAM, con un orientador cerca. Quien ya reservó desde su casa puede reimprimir su hora en el mismo tótem. La confirmación llega también al celular de un familiar.</p>
     <div class="demo">
-      <div class="device" aria-label="Simulación de tótem">
-        <div class="screen" id="screen" aria-live="polite"></div>
+      <div class="kiosk-wrap" aria-label="Simulación del tótem">
+        <div class="klabel">Tótem en el hall del CESFAM</div>
+        <div class="kiosk">
+          <div class="kcam"></div>
+          <div class="screen" id="screen" aria-live="polite"></div>
+          <div class="printer">
+            <div class="slot"></div>
+            <div class="slotlbl">Retire aquí su comprobante</div>
+            <div class="paper" id="paper"></div>
+          </div>
+        </div>
+        <div class="neck"></div>
+        <div class="base"></div>
       </div>
       <div class="side">
+        <div class="phone-wrap">
+          <div class="klabel">Celular del familiar</div>
+          <div class="phone">
+            <div class="wa">
+              <div class="wahead">CESFAM · Avisos<small>WhatsApp</small></div>
+              <div class="wabody" id="wabody"><div class="waempty" id="waempty">Aquí aparecerá el aviso cuando la persona confirme su hora en el tótem.</div></div>
+            </div>
+          </div>
+        </div>
         <div class="card">
           <h3>Cómo probarlo</h3>
           <ol class="steps">
-            <li>Toque <b>Toque aquí para comenzar</b>.</li>
-            <li>Escriba un RUT, por ejemplo <b>12345678K</b>.</li>
-            <li>Elija el tipo de atención y la jornada.</li>
-            <li>Imprima el comprobante o envíelo por WhatsApp a un familiar.</li>
+            <li><b>Reservar:</b> toque <b>Pedir una hora</b>, escriba un RUT (por ejemplo <b>12345678K</b>), elija atención y jornada, y confirme.</li>
+            <li><b>Reimprimir:</b> toque <b>Ya tengo hora</b>, escriba el RUT e imprima el comprobante.</li>
+            <li>Si elige <b>Control crónico</b> en la <b>tarde</b>, verá la pantalla para cuando no hay horas.</li>
           </ol>
-          <button class="restart" onclick="go('welcome')">Reiniciar demostración</button>
+          <button class="restart" onclick="resetAll()">Reiniciar demostración</button>
         </div>
         <div class="card">
           <h3>Qué es real y qué es simulado</h3>
-          <p>Las pantallas, los botones, el teclado, la selección de jornada y la retroalimentación al tocar funcionan. La validación del RUT, la agenda del CESFAM, la impresión y el envío por WhatsApp están <span class="sim">simulados</span>: no hay conexión con sistemas reales ni se guarda ningún dato.</p>
-        </div>
-        <div class="card">
-          <h3>Ajustes tras la validación</h3>
-          <p>Bloques <b>Mañana</b> y <b>Tarde</b> en vez de horas de 24 horas, cambio de color con ✓ y sonido al tocar, y rótulo de <b>servicio gratuito</b> con el sello del CESFAM en la confirmación.</p>
+          <p>Las pantallas, los botones, el teclado, la selección de jornada y la respuesta al tocar funcionan. La agenda del CESFAM, la validación del RUT, la impresora térmica y el envío por WhatsApp están <span class="sim">simulados</span>: no hay conexión con sistemas reales ni se guarda ningún dato.</p>
         </div>
       </div>
     </div>
@@ -222,7 +257,7 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
 </footer>
 
 <script>
-var state = {rut:"", tipo:"", jornada:""};
+var state = {rut:"", tipo:"", jornada:"", mode:"reserva"};
 var actx = null;
 function beep(){
   try{
@@ -233,9 +268,11 @@ function beep(){
     o.start(); o.stop(actx.currentTime + 0.09);
   }catch(e){}
 }
+var TITLES = {welcome:"CONECTASALUD SENIOR", rut:"PASO 1 DE 3: SU RUT", tipo:"PASO 2 DE 3: ¿A QUÉ VIENE?", ok:"PASO 3 DE 3: HORA RESERVADA", nohay:"SIN HORAS EN ESA JORNADA", mihora:"SU PRÓXIMA HORA"};
 function bar(step){
-  var t = {welcome:"CONECTASALUD SENIOR", rut:"PASO 1 DE 3: SU RUT", tipo:"PASO 2 DE 3: ¿A QUÉ VIENE?", ok:"PASO 3 DE 3: HORA RESERVADA", nohay:"SIN HORAS EN ESA JORNADA"}[step];
-  var n = {welcome:0, rut:1, tipo:2, ok:3, nohay:2}[step];
+  var t = TITLES[step];
+  if (step === "rut" && state.mode === "reimprimir") t = "INGRESE SU RUT";
+  var n = state.mode === "reimprimir" ? 0 : ({welcome:0, rut:1, tipo:2, ok:3, nohay:2, mihora:0}[step]);
   var p = "";
   for (var i = 1; i <= 3; i++) p += '<i class="' + (i <= n ? "on" : "") + '"></i>';
   return '<div class="sbar">' + t + '</div>' + (n ? '<div class="progress">' + p + '</div>' : "");
@@ -249,19 +286,19 @@ function fmtRut(r){
   while (body.length > 3){ out = "." + body.slice(-3) + out; body = body.slice(0, -3); }
   return body + out + "-" + dv;
 }
-function tap(el){
-  beep();
-  if (el && el.classList){ el.classList.add("sel"); }
-}
+function tap(el){ beep(); if (el && el.classList){ el.classList.add("sel"); } }
+function hora(){ return state.jornada === "Tarde" ? "15:00 de la tarde" : "10:30 de la mañana"; }
 function go(step){
   var s = document.getElementById("screen");
+  hidePaper();
   var h = "";
   if (step === "welcome"){
-    state = {rut:"", tipo:"", jornada:""};
+    state = {rut:"", tipo:"", jornada:"", mode:"reserva"};
     h = bar(step) + '<div class="sbody">'
-      + '<div class="big">Obtenga su hora<br>médica aquí</div>'
+      + '<div class="big">Bienvenido</div>'
       + '<div class="free">Servicio gratuito de salud pública</div>'
-      + '<button class="k primary" style="min-height:140px;font-size:26px" onclick="tap(this);setTimeout(function(){go(\'rut\')},250)">TOQUE AQUÍ<br>PARA COMENZAR</button>'
+      + '<button class="k primary" style="min-height:120px;font-size:25px" onclick="tap(this);state.mode=\'reserva\';setTimeout(function(){go(\'rut\')},250)">PEDIR UNA HORA</button>'
+      + '<button class="k navyb" style="min-height:96px;font-size:20px" onclick="tap(this);state.mode=\'reimprimir\';setTimeout(function(){go(\'rut\')},250)">YA TENGO HORA:<br>IMPRIMIR COMPROBANTE</button>'
       + '<div style="flex:1"></div>'
       + '<button class="k help" onclick="beep();document.getElementById(\'ov\').classList.add(\'show\')">PEDIR AYUDA</button>'
       + '</div>' + help();
@@ -301,22 +338,21 @@ function go(step){
       + '<div class="big" style="font-size:24px">Ya no quedan horas de ' + state.tipo.toLowerCase() + ' en la tarde</div>'
       + '<p style="font-size:19px;text-align:center">Puede elegir la mañana o quedar en lista de espera. Le avisaremos por WhatsApp si se libera una hora.</p>'
       + '<button class="k sun" onclick="tap(this);state.jornada=\'Mañana\';setTimeout(function(){go(\'ok\')},250)">☀ VER HORAS DE LA MAÑANA</button>'
-      + '<button class="k navyb" onclick="tap(this);toast(\'Quedó en lista de espera. Le avisaremos por WhatsApp. (simulado)\')">LISTA DE ESPERA</button>'
+      + '<button class="k navyb" onclick="tap(this);waitlist()">LISTA DE ESPERA</button>'
       + '<div style="flex:1"></div>'
       + '<button class="k grey" onclick="tap(this);go(\'tipo\')">VOLVER</button>'
       + '</div><div class="toast" id="toast"></div>';
   }
-  if (step === "ok"){
-    var hora = state.jornada === "Mañana" ? "10:30 de la mañana" : "15:00 de la tarde";
+  if (step === "ok" || step === "mihora"){
+    if (step === "mihora"){ state.tipo = state.tipo || "Médico general"; state.jornada = state.jornada || "Mañana"; }
     h = bar(step) + '<div class="sbody">'
-      + '<div style="text-align:center"><span class="seal">✓ RESERVADA · CESFAM</span></div>'
-      + '<div class="ticket">Paciente: Juan Pérez<br>RUT: ' + fmtRut(state.rut) + '<br>Atención: ' + state.tipo + ', box 4<br><b>Jueves 12 de noviembre</b><br><b>' + hora + '</b><br>Llegue 15 minutos antes</div>'
-      + '<div class="free" style="font-size:15px">Su hora ya está guardada. Puede irse tranquilo.</div>'
+      + '<div style="text-align:center"><span class="seal">✓ ' + (step === "ok" ? "RESERVADA" : "HORA ENCONTRADA") + ' · CESFAM</span></div>'
+      + '<div class="ticket">Paciente: Juan Pérez<br>RUT: ' + fmtRut(state.rut) + '<br>Atención: ' + state.tipo + ', box 4<br><b>Jueves 12 de noviembre</b><br><b>' + hora() + '</b><br>Llegue 15 minutos antes</div>'
+      + (step === "ok" ? '<div class="free" style="font-size:15px">Su hora ya está guardada. Puede irse tranquilo.</div>' : '<div class="free" style="font-size:15px">Esta es la hora que reservó desde su celular.</div>')
       + '<button class="k navyb" onclick="tap(this);printTicket()">🖨 IMPRIMIR COMPROBANTE</button>'
-      + '<button class="k primary" style="min-height:68px;font-size:18px" onclick="tap(this);toast(\'Mensaje enviado al familiar registrado (simulado)\')">ENVIAR WHATSAPP A FAMILIAR</button>'
+      + (step === "ok" ? '<button class="k primary" style="min-height:68px;font-size:18px" onclick="tap(this);sendWA()">ENVIAR WHATSAPP A FAMILIAR</button>' : '')
       + '<button class="k grey" onclick="tap(this);go(\'welcome\')">FINALIZAR</button>'
-      + '</div><div class="printout" id="po">CESFAM · ConectaSalud<br>------------------<br>' + state.tipo + '<br>Jue 12-nov · ' + hora + '<br>Box 4<br>------------------<br>Llegar 15 min antes</div>'
-      + '<div class="toast" id="toast"></div>';
+      + '</div><div class="toast" id="toast"></div>';
   }
   s.innerHTML = h;
 }
@@ -340,12 +376,12 @@ function checkRut(el){
     document.getElementById("msg").textContent = "Le faltan números. Revise y vuelva a tocar Continuar.";
     return;
   }
-  el.classList.add("sel"); setTimeout(function(){ go("tipo"); }, 250);
+  el.classList.add("sel");
+  setTimeout(function(){ go(state.mode === "reimprimir" ? "mihora" : "tipo"); }, 250);
 }
 function pick(el, field, val){
   beep();
-  var row = el.parentNode;
-  Array.prototype.forEach.call(row.querySelectorAll(".k"), function(b){ b.classList.remove("sel"); });
+  Array.prototype.forEach.call(el.parentNode.querySelectorAll(".k"), function(b){ b.classList.remove("sel"); });
   el.classList.add("sel");
   state[field] = val;
   document.getElementById("msg").textContent = "";
@@ -363,12 +399,33 @@ function confirmPick(el){
 function toast(t){
   var e = document.getElementById("toast"); if (!e) return;
   e.textContent = t; e.classList.add("show");
-  setTimeout(function(){ e.classList.remove("show"); }, 2800);
+  setTimeout(function(){ e.classList.remove("show"); }, 2600);
+}
+function now(){ var d = new Date(); return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
+function waMsg(text){
+  var empty = document.getElementById("waempty"); if (empty) empty.remove();
+  var b = document.createElement("div"); b.className = "bubble";
+  b.innerHTML = text + '<span class="t">' + now() + '</span>';
+  var body = document.getElementById("wabody"); body.appendChild(b); body.scrollTop = body.scrollHeight;
+}
+function sendWA(){
+  waMsg("Hola, le escribe el CESFAM. Juan Pérez tiene hora de <b>" + state.tipo.toLowerCase() + "</b> el <b>jueves 12 de noviembre a las " + hora() + "</b>, box 4. Debe llegar 15 minutos antes.");
+  toast("Aviso enviado al celular del familiar (simulado)");
+}
+function waitlist(){
+  waMsg("Hola, le escribe el CESFAM. Juan Pérez quedó en <b>lista de espera</b> para " + state.tipo.toLowerCase() + " en la tarde. Le avisaremos por aquí si se libera una hora.");
+  toast("Quedó en lista de espera (simulado)");
 }
 function printTicket(){
-  var p = document.getElementById("po"); if (!p) return;
-  p.classList.add("show");
-  setTimeout(function(){ p.classList.remove("show"); }, 3000);
+  var p = document.getElementById("paper");
+  p.innerHTML = '<b>CESFAM · ConectaSalud</b><br>--------------------<br>' + state.tipo + '<br><b>Jue 12-nov</b><br><b>' + hora() + '</b><br>Box 4<br>--------------------<br>Llegar 15 min antes<br>Reserva N.º 004127';
+  p.classList.remove("show"); void p.offsetWidth; p.classList.add("show");
+  toast("Imprimiendo comprobante… (simulado)");
+}
+function hidePaper(){ var p = document.getElementById("paper"); if (p) p.classList.remove("show"); }
+function resetAll(){
+  document.getElementById("wabody").innerHTML = '<div class="waempty" id="waempty">Aquí aparecerá el aviso cuando la persona confirme su hora en el tótem.</div>';
+  go("welcome");
 }
 go("welcome");
 </script>
