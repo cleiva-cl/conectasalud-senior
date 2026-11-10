@@ -57,10 +57,27 @@ table.cmp td.n{color:var(--red);font-weight:700}
 .kiosk{background:linear-gradient(180deg,#3a3f47,#24282e);border-radius:22px 22px 10px 10px;padding:18px 18px 0;width:100%;box-shadow:0 18px 40px rgba(0,0,0,.25)}
 .kcam{width:10px;height:10px;border-radius:50%;background:#555;margin:-8px auto 8px}
 .screen{background:#fff;border-radius:8px;overflow:hidden;min-height:600px;display:flex;flex-direction:column;position:relative}
-.printer{position:relative;height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.slot{width:62%;height:10px;background:#0d0f12;border-radius:6px;box-shadow:inset 0 2px 4px rgba(0,0,0,.8)}
+.printer{position:relative;height:84px;display:flex;align-items:center;justify-content:space-between;padding:0 18px}
+.reader{width:92px;height:58px;border-radius:8px;background:#15181c;border:2px solid #4a5059;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#c9ced6;font-size:10.5px;font-weight:700;cursor:pointer;transition:box-shadow .2s,border-color .2s;font-family:inherit;padding:0}
+.reader svg{width:22px;height:22px;margin-bottom:3px}
+.reader.ready{border-color:var(--gold);box-shadow:0 0 0 0 rgba(201,168,106,.7);animation:pulse 1.4s infinite}
+.reader.ok{border-color:#2E7D32;box-shadow:0 0 14px #2E7D32;animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,168,106,.7)}70%{box-shadow:0 0 0 12px rgba(201,168,106,0)}100%{box-shadow:0 0 0 0 rgba(201,168,106,0)}}
+.slotbox{flex:1;display:flex;flex-direction:column;align-items:center;margin-left:14px}
+.card-ill{margin:6px auto 0;width:200px;height:122px;border-radius:12px;background:linear-gradient(135deg,#e8eef6,#c7d5e8);border:2px solid #9fb2cc;position:relative}
+.card-ill .qr{position:absolute;right:16px;top:20px;width:64px;height:64px;background:repeating-conic-gradient(#1b1f24 0 25%,#fff 0 50%) 0 0/16px 16px;border:4px solid #fff}
+.card-ill .ln{position:absolute;left:16px;height:8px;border-radius:4px;background:#8aa0bf}
+.arrow-down{text-align:center;font-size:34px;color:var(--gold);line-height:1;animation:bob 1s infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+.chips{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.chip{border:1px solid #128C7E;color:#128C7E;background:#fff;border-radius:14px;padding:4px 10px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.chip[disabled]{opacity:.45;cursor:default}
+.bubble.out{align-self:flex-end;background:#DCF8C6;border-radius:10px 0 10px 10px}
+.btn-sim{display:block;width:100%;margin-top:8px;background:#fff;border:2px dashed var(--navy);color:var(--navy);font-weight:700;border-radius:8px;padding:8px;cursor:pointer;font-family:inherit}
+
+.slot{width:100%;height:10px;background:#0d0f12;border-radius:6px;box-shadow:inset 0 2px 4px rgba(0,0,0,.8)}
 .slotlbl{color:#c9ced6;font-size:12px;margin-top:6px;letter-spacing:.5px}
-.paper{position:absolute;top:40px;left:50%;width:56%;transform:translateX(-50%);background:#fff;font-family:monospace;font-size:13px;line-height:1.35;padding:0 12px;max-height:0;overflow:hidden;transition:max-height 1.2s ease,padding .3s;box-shadow:0 8px 16px rgba(0,0,0,.25);z-index:4;border-radius:0 0 4px 4px}
+.paper{position:absolute;top:50px;left:58%;width:54%;transform:translateX(-50%);background:#fff;font-family:monospace;font-size:13px;line-height:1.35;padding:0 12px;max-height:0;overflow:hidden;transition:max-height 1.2s ease,padding .3s;box-shadow:0 8px 16px rgba(0,0,0,.25);z-index:4;border-radius:0 0 4px 4px}
 .paper.show{max-height:260px;padding:10px 12px}
 .paper b{font-size:15px}
 .neck{width:34%;height:120px;background:linear-gradient(90deg,#2a2e35,#3d424a,#2a2e35)}
@@ -140,7 +157,7 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
   <div class="wrap">
     <p class="kicker">1. Problema</p>
     <h2>La hora médica se sigue ganando en la fila</h2>
-    <p>Antes de que abra el CESFAM, personas mayores esperan en la vereda, muchas veces con frío, para conseguir una hora. El agendamiento remoto existe desde 2019, pero exige RUT, Clave Única y manejar un navegador. Los teléfonos se saturan y las páginas fueron pensadas para otro tipo de usuario.</p>
+    <p>Antes de que abra el CESFAM, personas mayores esperan en la vereda, muchas veces con frío, para conseguir una hora. El canal remoto oficial, Telesalud, pide llenar un formulario web y tener correo electrónico. Los teléfonos se saturan, y los tótems que hay en algunos CESFAM solo entregan un número para seguir esperando.</p>
     <div class="grid g3" style="margin-top:20px">
       <div class="card"><div class="stat">23<small> %</small></div><p>de las personas mayores realiza trámites por internet.</p></div>
       <div class="card"><div class="stat">&lt;5<small> %</small></div><p>entre quienes tienen 80 años o más.</p></div>
@@ -155,7 +172,7 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
   <div class="wrap">
     <p class="kicker">2. Solución</p>
     <h2>Pruebe el tótem de autoatención</h2>
-    <p>La reserva se hace en un tótem instalado en el hall del CESFAM, con un orientador cerca. Quien ya reservó desde su casa puede reimprimir su hora en el mismo tótem. La confirmación llega también al celular de un familiar.</p>
+    <p>El tótem está en el hall del CESFAM, con un orientador cerca, y funciona como una puerta de entrada asistida a Telesalud. Las horas programadas (controles, recetas, curaciones) se reservan al momento. Si la persona se siente enferma, el tótem registra su solicitud y el equipo del CESFAM la prioriza según criterio clínico. La persona se identifica con su carnet, sin claves, y cada aviso llega al celular registrado en el CESFAM.</p>
     <div class="demo">
       <div class="kiosk-wrap" aria-label="Simulación del tótem">
         <div class="klabel">Tótem en el hall del CESFAM</div>
@@ -163,8 +180,8 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
           <div class="kcam"></div>
           <div class="screen" id="screen" aria-live="polite"></div>
           <div class="printer">
-            <div class="slot"></div>
-            <div class="slotlbl">Retire aquí su comprobante</div>
+            <button class="reader" id="reader" onclick="scanCard()" aria-label="Lector de carnet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v7M14 20h3"/></svg>LECTOR DE CARNET</button>
+            <div class="slotbox"><div class="slot"></div><div class="slotlbl">Retire aquí su comprobante</div></div>
             <div class="paper" id="paper"></div>
           </div>
         </div>
@@ -173,26 +190,28 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
       </div>
       <div class="side">
         <div class="phone-wrap">
-          <div class="klabel">Celular del familiar</div>
+          <div class="klabel">Celular registrado en el CESFAM</div>
           <div class="phone">
             <div class="wa">
               <div class="wahead">CESFAM · Avisos<small>WhatsApp</small></div>
-              <div class="wabody" id="wabody"><div class="waempty" id="waempty">Aquí aparecerá el aviso cuando la persona confirme su hora en el tótem.</div></div>
+              <div class="wabody" id="wabody"><div class="waempty" id="waempty">Aquí llegan los avisos del CESFAM a la persona y a su familiar.</div></div>
             </div>
           </div>
         </div>
         <div class="card">
           <h3>Cómo probarlo</h3>
           <ol class="steps">
-            <li><b>Reservar:</b> toque <b>Pedir una hora</b>, escriba un RUT (por ejemplo <b>12345678K</b>), elija atención y jornada, y confirme.</li>
-            <li><b>Reimprimir:</b> toque <b>Ya tengo hora</b>, escriba el RUT e imprima el comprobante.</li>
-            <li>Si elige <b>Control crónico</b> en la <b>tarde</b>, verá la pantalla para cuando no hay horas.</li>
+            <li><b>Pedir una hora:</b> toque el lector de carnet para simular la lectura. Elija un control, receta o curación y la jornada. Si elige <b>Me siento enfermo</b>, el tótem registra una solicitud.</li>
+            <li><b>Ya tengo hora:</b> con el carnet puede imprimir, cambiar o anular su hora. Al anular, el celular recibe un aviso para revertirlo.</li>
+            <li><b>Desde la casa:</b> use el botón de abajo para recibir el recordatorio del día anterior y responder 1 o 2.</li>
+            <li>Sin carnet, puede escribir el RUT, pero solo para pedir una hora.</li>
           </ol>
+          <button class="btn-sim" onclick="reminder()">Simular recordatorio por WhatsApp</button>
           <button class="restart" onclick="resetAll()">Reiniciar demostración</button>
         </div>
         <div class="card">
           <h3>Qué es real y qué es simulado</h3>
-          <p>Las pantallas, los botones, el teclado, la selección de jornada y la respuesta al tocar funcionan. La agenda del CESFAM, la validación del RUT, la impresora térmica y el envío por WhatsApp están <span class="sim">simulados</span>: no hay conexión con sistemas reales ni se guarda ningún dato.</p>
+          <p>Las pantallas, los botones, el teclado y los flujos de reserva, solicitud, cambio y anulación funcionan. El lector de carnet, la agenda del CESFAM, el envío a Telesalud, la impresora térmica y los mensajes de WhatsApp están <span class="sim">simulados</span>: no hay conexión con sistemas reales ni se guarda ningún dato.</p>
         </div>
       </div>
     </div>
@@ -225,12 +244,13 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
     <h2>Por qué funciona mejor que las alternativas</h2>
     <div class="tablewrap">
     <table class="cmp">
-      <thead><tr><th></th><th>Fila presencial</th><th>Teléfono</th><th>Web con Clave Única</th><th>ConectaSalud Senior</th></tr></thead>
+      <thead><tr><th></th><th>Fila presencial</th><th>Teléfono</th><th>Formulario web (Telesalud)</th><th>ConectaSalud Senior</th></tr></thead>
       <tbody>
         <tr><td>Sin madrugar ni esperar afuera</td><td class="n">No</td><td class="y">Sí</td><td class="y">Sí</td><td class="y">Sí</td></tr>
-        <tr><td>Sin claves ni descargas</td><td class="y">Sí</td><td class="y">Sí</td><td class="n">No</td><td class="y">Sí</td></tr>
+        <tr><td>Sin claves, correo ni formularios</td><td class="y">Sí</td><td class="y">Sí</td><td class="n">No</td><td class="y">Sí</td></tr>
         <tr><td>Ayuda de una persona cerca</td><td class="y">Sí</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td></tr>
         <tr><td>Comprobante en papel</td><td class="y">Sí</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td></tr>
+        <tr><td>Prioriza según necesidad clínica</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td><td class="y">Sí</td></tr>
         <tr><td>Aviso a la familia</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Sí</td></tr>
       </tbody>
     </table>
@@ -247,7 +267,7 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
       <div class="card"><span class="pill">Meta</span><div class="stat" style="margin-top:8px">&lt;90<small> s</small></div><p>tiempo promedio por reserva.</p></div>
       <div class="card"><span class="pill">Meta</span><div class="stat" style="margin-top:8px">90<small> %</small></div><p>califica la experiencia como tranquila y clara.</p></div>
     </div>
-    <p style="margin-top:18px"><b>Próximos pasos:</b> pantalla para cuando no hay horas, botón para llamar al orientador, prueba en sala de espera con 15 personas mayores (al menos cinco de 80 años o más) y estimación de costos para un piloto en un CESFAM.</p>
+    <p style="margin-top:18px"><b>Próximos pasos:</b> probar con personas mayores el lector de carnet, la solicitud por morbilidad y la anulación; prueba en sala de espera con 15 personas (al menos cinco de 80 años o más); validar con la dirección de salud la conexión con Telesalud y estimar costos para un piloto en un CESFAM.</p>
     <p class="muted">Las metas son criterios de evaluación del piloto, no resultados obtenidos.</p>
   </div>
 </section>
@@ -257,104 +277,192 @@ footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
 </footer>
 
 <script>
-var state = {rut:"", tipo:"", jornada:"", mode:"reserva"};
-var actx = null;
-function beep(){
+var state = {rut:"", tipo:"", jornada:"", mode:"reserva", via:"", sint:""};
+var booked = {dia:"Jueves 12 de noviembre", diaC:"Jue 12-nov", hora:"10:30 de la mañana", box:"4", tipo:"Control crónico"};
+var waiting = null, actx = null, timers = [];
+var PROG = {"Control crónico":1, "Recetas":1, "Curación":1};
+function beep(f){
   try{
     actx = actx || new (window.AudioContext || window.webkitAudioContext)();
     var o = actx.createOscillator(), g = actx.createGain();
-    o.frequency.value = 880; g.gain.value = 0.08;
+    o.frequency.value = f || 880; g.gain.value = 0.08;
     o.connect(g); g.connect(actx.destination);
     o.start(); o.stop(actx.currentTime + 0.09);
   }catch(e){}
 }
-var TITLES = {welcome:"CONECTASALUD SENIOR", rut:"PASO 1 DE 3: SU RUT", tipo:"PASO 2 DE 3: ¿A QUÉ VIENE?", ok:"PASO 3 DE 3: HORA RESERVADA", nohay:"SIN HORAS EN ESA JORNADA", mihora:"SU PRÓXIMA HORA"};
+function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+var TITLES = {welcome:"CONECTASALUD SENIOR", carnet:"IDENTIFÍQUESE", rut:"ESCRIBA SU RUT", tipo:"¿A QUÉ VIENE?", jornada:"ELIJA EL MOMENTO DEL DÍA", ok:"HORA RESERVADA", nohay:"SIN HORAS EN ESA JORNADA",
+  alarma:"ATENCIÓN", desde:"CUÉNTENOS UN POCO", solicitud:"SOLICITUD RECIBIDA", mihora:"SU PRÓXIMA HORA", anular:"ANULAR SU HORA", anulada:"HORA ANULADA", cambio:"CAMBIAR SU HORA"};
+var STEP = {carnet:1, rut:1, tipo:2, jornada:2, desde:2, alarma:2, nohay:2, ok:3, solicitud:3};
 function bar(step){
-  var t = TITLES[step];
-  if (step === "rut" && state.mode === "reimprimir") t = "INGRESE SU RUT";
-  var n = state.mode === "reimprimir" ? 0 : ({welcome:0, rut:1, tipo:2, ok:3, nohay:2, mihora:0}[step]);
-  var p = "";
+  var n = state.mode === "reserva" ? (STEP[step] || 0) : 0, p = "";
   for (var i = 1; i <= 3; i++) p += '<i class="' + (i <= n ? "on" : "") + '"></i>';
-  return '<div class="sbar">' + t + '</div>' + (n ? '<div class="progress">' + p + '</div>' : "");
+  return '<div class="sbar">' + TITLES[step] + '</div>' + (n ? '<div class="progress">' + p + '</div>' : "");
 }
 function help(){
   return '<div class="overlay" id="ov"><div class="box"><p><b>Un orientador viene en camino.</b></p><p>Quédese frente a la pantalla, por favor.</p><button class="k soft" style="width:100%" onclick="tap(this);document.getElementById(\'ov\').classList.remove(\'show\')">Entendido</button></div></div>';
 }
+function helpBtn(){ return '<button class="k help" onclick="beep();document.getElementById(\'ov\').classList.add(\'show\')">PEDIR AYUDA</button>'; }
 function fmtRut(r){
   if (r.length < 2) return r;
   var body = r.slice(0, -1), dv = r.slice(-1), out = "";
   while (body.length > 3){ out = "." + body.slice(-3) + out; body = body.slice(0, -3); }
   return body + out + "-" + dv;
 }
-function tap(el){ beep(); if (el && el.classList){ el.classList.add("sel"); } }
-function hora(){ return state.jornada === "Tarde" ? "15:00 de la tarde" : "10:30 de la mañana"; }
+function tap(el){ beep(); if (el && el.classList) el.classList.add("sel"); }
+function nav(el, step, ms){ tap(el); later(function(){ go(step); }, ms || 250); }
+function horaDe(j){ return j === "Tarde" ? "15:00 de la tarde" : "10:30 de la mañana"; }
+function reader(mode){ var r = document.getElementById("reader"); r.classList.remove("ready", "ok"); if (mode) r.classList.add(mode); }
 function go(step){
-  var s = document.getElementById("screen");
-  hidePaper();
-  var h = "";
+  var s = document.getElementById("screen"), h = "";
+  hidePaper(); reader(step === "carnet" ? "ready" : null);
   if (step === "welcome"){
-    state = {rut:"", tipo:"", jornada:"", mode:"reserva"};
-    h = bar(step) + '<div class="sbody">'
+    state = {rut:"", tipo:"", jornada:"", mode:"reserva", via:"", sint:""};
+    h = '<div class="sbody">'
       + '<div class="big">Bienvenido</div>'
       + '<div class="free">Servicio gratuito de salud pública</div>'
-      + '<button class="k primary" style="min-height:120px;font-size:25px" onclick="tap(this);state.mode=\'reserva\';setTimeout(function(){go(\'rut\')},250)">PEDIR UNA HORA</button>'
-      + '<button class="k navyb" style="min-height:96px;font-size:20px" onclick="tap(this);state.mode=\'reimprimir\';setTimeout(function(){go(\'rut\')},250)">YA TENGO HORA:<br>IMPRIMIR COMPROBANTE</button>'
+      + '<button class="k primary" style="min-height:120px;font-size:25px" onclick="state.mode=\'reserva\';nav(this,\'carnet\')">PEDIR UNA HORA</button>'
+      + '<button class="k navyb" style="min-height:96px;font-size:20px" onclick="state.mode=\'tengo\';nav(this,\'carnet\')">YA TENGO HORA:<br>IMPRIMIR, CAMBIAR O ANULAR</button>'
+      + '<div style="flex:1"></div>' + helpBtn() + '</div>' + help();
+  }
+  if (step === "carnet"){
+    h = '<div class="sbody">'
+      + '<div class="lbl">Acerque el reverso de su carnet al lector, abajo a la izquierda</div>'
+      + '<div class="card-ill"><div class="ln" style="top:24px;width:70px"></div><div class="ln" style="top:44px;width:90px"></div><div class="ln" style="top:64px;width:60px"></div><div class="qr"></div></div>'
+      + '<div class="arrow-down">↓</div>'
+      + '<div class="msg" id="msg"></div>'
       + '<div style="flex:1"></div>'
-      + '<button class="k help" onclick="beep();document.getElementById(\'ov\').classList.add(\'show\')">PEDIR AYUDA</button>'
+      + (state.mode === "reserva"
+          ? '<button class="k soft" style="min-height:64px;font-size:18px" onclick="nav(this,\'rut\')">NO TENGO MI CARNET:<br>ESCRIBIR MI RUT</button>'
+          : '<div class="free" style="font-size:15px">Sin carnet, el orientador puede ayudarle.</div>')
+      + '<div class="row2"><button class="k grey" onclick="nav(this,\'welcome\')">VOLVER</button>' + helpBtn().replace('class="k help"', 'class="k help" style="min-height:64px;font-size:17px"') + '</div>'
       + '</div>' + help();
   }
   if (step === "rut"){
     var keys = ["1","2","3","4","5","6","7","8","9","K","0","⌫"];
-    var pad = keys.map(function(k){
-      return '<button class="k soft" aria-label="' + (k === "⌫" ? "Borrar" : k) + '" onclick="key(this,\'' + k + '\')">' + k + '</button>';
-    }).join("");
-    h = bar(step) + '<div class="sbody">'
-      + '<div class="lbl">Escriba su RUT</div>'
+    h = '<div class="sbody">'
       + '<div class="rut" id="rut">' + (fmtRut(state.rut) || "&nbsp;") + '</div>'
       + '<div class="msg" id="msg"></div>'
-      + '<div class="pad">' + pad + '</div>'
-      + '<div class="row2"><button class="k grey" onclick="tap(this);go(\'welcome\')">VOLVER</button>'
+      + '<div class="pad">' + keys.map(function(k){ return '<button class="k soft" aria-label="' + (k === "⌫" ? "Borrar" : k) + '" onclick="key(this,\'' + k + '\')">' + k + '</button>'; }).join("") + '</div>'
+      + '<div class="row2"><button class="k grey" onclick="nav(this,\'carnet\')">VOLVER</button>'
       + '<button class="k primary" style="min-height:64px;font-size:18px" onclick="checkRut(this)">CONTINUAR</button></div>'
       + '</div>';
   }
   if (step === "tipo"){
-    var tipos = [["Médico general","MÉDICO<br>GENERAL"],["Control crónico","CONTROL<br>CRÓNICO"],["Enfermería","ENFERMERÍA<br>CURACIÓN"],["Recetas","RECETAS<br>FARMACIA"]];
-    h = bar(step) + '<div class="sbody">'
-      + '<div class="lbl">¿A qué atención viene?</div>'
-      + '<div class="row2">' + tipos.map(function(t){
-          return '<button class="k soft" style="font-size:17px" onclick="pick(this,\'tipo\',\'' + t[0] + '\')">' + t[1] + '</button>';
-        }).join("") + '</div>'
-      + '<div class="lbl">Elija el momento del día</div>'
+    state.tipo = ""; state.jornada = "";
+    h = '<div class="sbody">'
+      + '<button class="k" style="background:#FFE9E6;color:#8E1B12;font-size:20px;min-height:84px" onclick="state.tipo=\'Consulta por morbilidad\';nav(this,\'desde\')">🤒 ME SIENTO ENFERMO</button>'
+      + '<div class="lbl" style="font-size:16px;font-weight:700;color:#5b6470">Horas programadas</div>'
+      + '<button class="k soft" style="font-size:19px;min-height:70px" onclick="state.tipo=\'Control crónico\';nav(this,\'jornada\')">CONTROL DE CRÓNICOS</button>'
       + '<div class="row2">'
-      + '<button class="k sun" onclick="pick(this,\'jornada\',\'Mañana\')">☀ MAÑANA</button>'
-      + '<button class="k dusk" onclick="pick(this,\'jornada\',\'Tarde\')">🌇 TARDE</button></div>'
-      + '<div class="msg" id="msg"></div>'
-      + '<div class="row2"><button class="k grey" onclick="tap(this);go(\'rut\')">VOLVER</button>'
-      + '<button class="k primary" style="min-height:64px;font-size:18px" onclick="confirmPick(this)">CONTINUAR</button></div>'
+      + '<button class="k soft" style="font-size:17px;min-height:70px" onclick="state.tipo=\'Recetas\';nav(this,\'jornada\')">RENOVAR<br>RECETA</button>'
+      + '<button class="k soft" style="font-size:17px;min-height:70px" onclick="state.tipo=\'Curación\';nav(this,\'jornada\')">CURACIÓN</button></div>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'welcome\')">VOLVER</button>'
+      + '</div>';
+  }
+  if (step === "jornada"){
+    h = '<div class="sbody">'
+      + '<div class="lbl">' + state.tipo + '</div>'
+      + '<button class="k sun" style="min-height:110px;font-size:26px" onclick="pickJ(this,\'Mañana\')">☀ MAÑANA</button>'
+      + '<button class="k dusk" style="min-height:110px;font-size:26px" onclick="pickJ(this,\'Tarde\')">🌇 TARDE</button>'
+      + '<div class="free" style="font-size:15px">Le daremos la primera hora disponible.</div>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'' + (state.mode === "cambio" ? "mihora" : "tipo") + '\')">VOLVER</button>'
       + '</div>';
   }
   if (step === "nohay"){
-    h = bar(step) + '<div class="sbody">'
-      + '<div class="big" style="font-size:24px">Ya no quedan horas de ' + state.tipo.toLowerCase() + ' en la tarde</div>'
+    h = '<div class="sbody">'
+      + '<div class="big" style="font-size:24px">Ya no quedan horas de control en la tarde</div>'
       + '<p style="font-size:19px;text-align:center">Puede elegir la mañana o quedar en lista de espera. Le avisaremos por WhatsApp si se libera una hora.</p>'
-      + '<button class="k sun" onclick="tap(this);state.jornada=\'Mañana\';setTimeout(function(){go(\'ok\')},250)">☀ VER HORAS DE LA MAÑANA</button>'
+      + '<button class="k sun" onclick="state.jornada=\'Mañana\';nav(this,\'ok\')">☀ VER HORAS DE LA MAÑANA</button>'
       + '<button class="k navyb" onclick="tap(this);waitlist()">LISTA DE ESPERA</button>'
-      + '<div style="flex:1"></div>'
-      + '<button class="k grey" onclick="tap(this);go(\'tipo\')">VOLVER</button>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'jornada\')">VOLVER</button>'
       + '</div><div class="toast" id="toast"></div>';
   }
-  if (step === "ok" || step === "mihora"){
-    if (step === "mihora"){ state.tipo = state.tipo || "Médico general"; state.jornada = state.jornada || "Mañana"; }
-    h = bar(step) + '<div class="sbody">'
-      + '<div style="text-align:center"><span class="seal">✓ ' + (step === "ok" ? "RESERVADA" : "HORA ENCONTRADA") + ' · CESFAM</span></div>'
-      + '<div class="ticket">Paciente: Juan Pérez<br>RUT: ' + fmtRut(state.rut) + '<br>Atención: ' + state.tipo + ', box 4<br><b>Jueves 12 de noviembre</b><br><b>' + hora() + '</b><br>Llegue 15 minutos antes</div>'
-      + (step === "ok" ? '<div class="free" style="font-size:15px">Su hora ya está guardada. Puede irse tranquilo.</div>' : '<div class="free" style="font-size:15px">Esta es la hora que reservó desde su celular.</div>')
-      + '<button class="k navyb" onclick="tap(this);printTicket()">🖨 IMPRIMIR COMPROBANTE</button>'
-      + (step === "ok" ? '<button class="k primary" style="min-height:68px;font-size:18px" onclick="tap(this);sendWA()">ENVIAR WHATSAPP A FAMILIAR</button>' : '')
-      + '<button class="k grey" onclick="tap(this);go(\'welcome\')">FINALIZAR</button>'
+  if (step === "desde"){
+    h = '<div class="sbody">'
+      + '<div class="lbl">¿Tiene ahora alguno de estos síntomas?</div>'
+      + '<div class="free" style="font-size:16px;text-align:left;line-height:1.5">• Dolor fuerte en el pecho<br>• Le cuesta respirar<br>• Se desmayó o está muy confundido</div>'
+      + '<div class="row2"><button class="k" style="background:#C62828;color:#fff" onclick="nav(this,\'alarma\')">SÍ</button>'
+      + '<button class="k primary" onclick="tap(this);askSince()">NO</button></div>'
+      + '<div id="since"></div>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'tipo\')">VOLVER</button>'
+      + '</div>';
+  }
+  if (step === "alarma"){
+    h = '<div class="sbody">'
+      + '<div class="big" style="font-size:26px;color:#C62828">No espere una hora</div>'
+      + '<p style="font-size:20px;text-align:center">Ya avisamos al orientador. Quédese aquí: lo van a acompañar a la atención de urgencia.</p>'
+      + '<p style="font-size:17px;text-align:center">Si está en su casa, llame al <b>131</b>.</p>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'welcome\')">FINALIZAR</button>'
+      + '</div>';
+  }
+  if (step === "solicitud"){
+    h = '<div class="sbody">'
+      + '<div style="text-align:center"><span class="seal">✓ SOLICITUD N.º S-2081</span></div>'
+      + '<div class="ticket">Consulta por morbilidad<br>Se siente mal: ' + state.sint + '<br><b>El equipo del CESFAM revisará su solicitud</b><br>Le avisaremos por WhatsApp <b>hoy antes de las 17:00</b></div>'
+      + '<div class="free" style="font-size:15px">Su solicitud quedó registrada. No necesita hacer fila.</div>'
+      + '<button class="k navyb" onclick="tap(this);printTicket(\'sol\')">🖨 IMPRIMIR COMPROBANTE</button>'
+      + '<button class="k grey" onclick="nav(this,\'welcome\')">FINALIZAR</button>'
       + '</div><div class="toast" id="toast"></div>';
   }
-  s.innerHTML = h;
+  if (step === "ok"){
+    booked = {dia:"Jueves 12 de noviembre", diaC:"Jue 12-nov", hora:horaDe(state.jornada), box:"4", tipo:state.tipo};
+    h = '<div class="sbody">'
+      + '<div style="text-align:center"><span class="seal">✓ ' + (state.mode === "cambio" ? "HORA CAMBIADA" : "RESERVADA") + ' · CESFAM</span></div>'
+      + '<div class="ticket">' + booked.tipo + ', box ' + booked.box + '<br><b>' + booked.dia + '</b><br><b>' + booked.hora + '</b><br>Llegue 15 minutos antes</div>'
+      + '<div class="free" style="font-size:15px">Su hora ya está guardada. Puede irse tranquilo.</div>'
+      + '<button class="k navyb" onclick="tap(this);printTicket(\'hora\')">🖨 IMPRIMIR COMPROBANTE</button>'
+      + '<button class="k grey" onclick="nav(this,\'welcome\')">FINALIZAR</button>'
+      + '</div><div class="toast" id="toast"></div>';
+    later(function(){ waMsg((state.mode === "cambio" ? "Su hora fue <b>cambiada</b>. " : "") + "Hola, le escribe el CESFAM. Juan Pérez tiene hora el <b>" + booked.dia.toLowerCase() + " a las " + booked.hora + "</b>, box " + booked.box + ". Debe llegar 15 minutos antes."); }, 900);
+  }
+  if (step === "mihora" && booked.cancelled){
+    h = '<div class="sbody">'
+      + '<div style="text-align:center"><span class="seal">✓ CARNET VERIFICADO</span></div>'
+      + '<div class="big" style="font-size:24px">No tiene horas reservadas</div>'
+      + '<p style="font-size:18px;text-align:center">Su última hora fue anulada.</p>'
+      + '<button class="k primary" onclick="state.mode=\'reserva\';nav(this,\'tipo\')">PEDIR UNA HORA</button>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'welcome\')">FINALIZAR</button>'
+      + '</div>';
+    s.innerHTML = bar(step) + h; return;
+  }
+  if (step === "mihora"){
+    h = '<div class="sbody">'
+      + '<div style="text-align:center"><span class="seal">✓ CARNET VERIFICADO</span></div>'
+      + '<div class="ticket"><b>' + booked.dia + '</b><br><b>' + booked.hora + '</b><br>Box ' + booked.box + '</div>'
+      + '<button class="k navyb" style="min-height:64px" onclick="tap(this);printTicket(\'hora\')">🖨 IMPRIMIR COMPROBANTE</button>'
+      + '<button class="k soft" style="min-height:64px;font-size:19px" onclick="state.mode=\'cambio\';state.tipo=booked.tipo;nav(this,\'jornada\')">CAMBIAR MI HORA</button>'
+      + '<button class="k" style="min-height:64px;font-size:19px;background:#FFE9E6;color:#8E1B12" onclick="nav(this,\'anular\')">ANULAR MI HORA</button>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'welcome\')">FINALIZAR</button>'
+      + '</div><div class="toast" id="toast"></div>';
+  }
+  if (step === "anular"){
+    h = '<div class="sbody">'
+      + '<div class="big" style="font-size:24px">¿Seguro que no podrá venir?</div>'
+      + '<div class="ticket"><b>' + booked.dia + '</b><br><b>' + booked.hora + '</b></div>'
+      + '<p style="font-size:17px;text-align:center">La hora pasará a otra persona de la lista de espera.</p>'
+      + '<button class="k" style="background:#C62828;color:#fff" onclick="nav(this,\'anulada\')">SÍ, ANULAR MI HORA</button>'
+      + '<button class="k grey" onclick="nav(this,\'mihora\')">NO, VOLVER</button>'
+      + '</div>';
+  }
+  if (step === "anulada"){
+    booked.cancelled = true;
+    h = '<div class="sbody">'
+      + '<div class="big" style="font-size:26px">Su hora fue anulada</div>'
+      + '<p style="font-size:18px;text-align:center">Gracias por avisar. La hora quedará disponible para alguien de la lista de espera.</p>'
+      + '<p style="font-size:16px;text-align:center">Le enviamos un aviso a su celular registrado.</p>'
+      + '<div style="flex:1"></div><button class="k grey" onclick="nav(this,\'welcome\')">FINALIZAR</button>'
+      + '</div>';
+    later(cancelMsg, 900);
+  }
+  s.innerHTML = bar(step) + h;
+}
+function scanCard(){
+  var r = document.getElementById("reader");
+  if (!r.classList.contains("ready")) return;
+  beep(1200); reader("ok");
+  state.rut = "12345678K"; state.via = "carnet";
+  later(function(){ go(state.mode === "reserva" ? "tipo" : "mihora"); }, 600);
 }
 function key(el, k){
   beep();
@@ -376,25 +484,16 @@ function checkRut(el){
     document.getElementById("msg").textContent = "Le faltan números. Revise y vuelva a tocar Continuar.";
     return;
   }
-  el.classList.add("sel");
-  setTimeout(function(){ go(state.mode === "reimprimir" ? "mihora" : "tipo"); }, 250);
+  state.via = "rut"; nav(el, "tipo");
 }
-function pick(el, field, val){
-  beep();
-  Array.prototype.forEach.call(el.parentNode.querySelectorAll(".k"), function(b){ b.classList.remove("sel"); });
-  el.classList.add("sel");
-  state[field] = val;
-  document.getElementById("msg").textContent = "";
+function pickJ(el, j){
+  state.jornada = j;
+  nav(el, (j === "Tarde" && state.tipo === "Control crónico" && state.mode !== "cambio") ? "nohay" : "ok");
 }
-function confirmPick(el){
-  beep();
-  if (!state.tipo || !state.jornada){
-    document.getElementById("msg").textContent = !state.tipo ? "Elija el tipo de atención." : "Elija mañana o tarde.";
-    return;
-  }
-  el.classList.add("sel");
-  var next = (state.jornada === "Tarde" && state.tipo === "Control crónico") ? "nohay" : "ok";
-  setTimeout(function(){ go(next); }, 250);
+function askSince(){
+  document.getElementById("since").innerHTML = '<div class="lbl" style="margin-top:8px">¿Desde cuándo se siente mal?</div><div class="row2">'
+    + '<button class="k soft" style="min-height:64px;font-size:18px" onclick="state.sint=\'desde hoy\';nav(this,\'solicitud\')">DESDE HOY</button>'
+    + '<button class="k soft" style="min-height:64px;font-size:18px" onclick="state.sint=\'hace días\';nav(this,\'solicitud\')">HACE DÍAS</button></div>';
 }
 function toast(t){
   var e = document.getElementById("toast"); if (!e) return;
@@ -402,29 +501,51 @@ function toast(t){
   setTimeout(function(){ e.classList.remove("show"); }, 2600);
 }
 function now(){ var d = new Date(); return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
-function waMsg(text){
+function waMsg(text, out){
   var empty = document.getElementById("waempty"); if (empty) empty.remove();
-  var b = document.createElement("div"); b.className = "bubble";
+  var b = document.createElement("div"); b.className = "bubble" + (out ? " out" : "");
   b.innerHTML = text + '<span class="t">' + now() + '</span>';
   var body = document.getElementById("wabody"); body.appendChild(b); body.scrollTop = body.scrollHeight;
+  return b;
 }
-function sendWA(){
-  waMsg("Hola, le escribe el CESFAM. Juan Pérez tiene hora de <b>" + state.tipo.toLowerCase() + "</b> el <b>jueves 12 de noviembre a las " + hora() + "</b>, box 4. Debe llegar 15 minutos antes.");
-  toast("Aviso enviado al celular del familiar (simulado)");
+function chips(b, opts){
+  var c = document.createElement("div"); c.className = "chips";
+  opts.forEach(function(o){
+    var x = document.createElement("button"); x.className = "chip"; x.textContent = o[0];
+    x.onclick = function(){ Array.prototype.forEach.call(c.children, function(y){ y.disabled = true; }); beep(); waMsg(o[0], true); later(o[1], 700); };
+    c.appendChild(x);
+  });
+  b.insertBefore(c, b.querySelector(".t"));
+  document.getElementById("wabody").scrollTop = 9999;
+}
+function cancelMsg(){
+  var b = waMsg("El CESFAM le informa que la hora del <b>" + booked.dia.toLowerCase() + " a las " + booked.hora + "</b> fue <b>anulada</b> en el tótem. Si no fue usted, responda 3 en los próximos 30 minutos y la recuperamos.");
+  chips(b, [["3 · No fui yo", function(){ booked.cancelled = false; waMsg("Recuperamos su hora del <b>" + booked.dia.toLowerCase() + " a las " + booked.hora + "</b>. Un funcionario revisará lo ocurrido."); }]]);
+}
+function reminder(){
+  var b = waMsg("Recordatorio del CESFAM: Juan Pérez tiene hora <b>mañana " + booked.dia.split(" ").slice(1).join(" ") + " a las " + booked.hora + "</b>, box " + booked.box + ". Responda 1 para confirmar o 2 para anular.");
+  chips(b, [["1 · Confirmo", function(){ waMsg("Gracias, su hora quedó confirmada."); }],
+            ["2 · Anular", function(){ booked.cancelled = true; waMsg("Su hora fue anulada y pasará a la lista de espera. Gracias por avisar."); }]]);
 }
 function waitlist(){
-  waMsg("Hola, le escribe el CESFAM. Juan Pérez quedó en <b>lista de espera</b> para " + state.tipo.toLowerCase() + " en la tarde. Le avisaremos por aquí si se libera una hora.");
+  waMsg("Hola, le escribe el CESFAM. Juan Pérez quedó en <b>lista de espera</b> para control de crónicos en la tarde. Le avisaremos por aquí si se libera una hora.");
   toast("Quedó en lista de espera (simulado)");
 }
-function printTicket(){
+function printTicket(kind){
   var p = document.getElementById("paper");
-  p.innerHTML = '<b>CESFAM · ConectaSalud</b><br>--------------------<br>' + state.tipo + '<br><b>Jue 12-nov</b><br><b>' + hora() + '</b><br>Box 4<br>--------------------<br>Llegar 15 min antes<br>Reserva N.º 004127';
+  p.innerHTML = kind === "sol"
+    ? '<b>CESFAM · ConectaSalud</b><br>--------------------<br>Solicitud N.º S-2081<br>Consulta por morbilidad<br>Aviso por WhatsApp<br><b>hoy antes de 17:00</b><br>--------------------'
+    : '<b>CESFAM · ConectaSalud</b><br>--------------------<br>' + booked.tipo + '<br><b>' + booked.diaC + '</b><br><b>' + booked.hora + '</b><br>Box ' + booked.box + '<br>--------------------<br>Llegar 15 min antes';
   p.classList.remove("show"); void p.offsetWidth; p.classList.add("show");
   toast("Imprimiendo comprobante… (simulado)");
+  if (kind === "sol") later(function(){ waMsg("Recibimos la solicitud S-2081 de Juan Pérez. El equipo del CESFAM la está revisando."); }, 900);
+  if (kind === "sol") later(function(){ waMsg("Le asignamos hora con <b>medicina general mañana a las 11:15</b>, box 2. Si no puede venir, responda 2."); }, 6000);
 }
 function hidePaper(){ var p = document.getElementById("paper"); if (p) p.classList.remove("show"); }
 function resetAll(){
-  document.getElementById("wabody").innerHTML = '<div class="waempty" id="waempty">Aquí aparecerá el aviso cuando la persona confirme su hora en el tótem.</div>';
+  timers.forEach(clearTimeout); timers = [];
+  document.getElementById("wabody").innerHTML = '<div class="waempty" id="waempty">Aquí llegan los avisos del CESFAM a la persona y a su familiar.</div>';
+  booked = {dia:"Jueves 12 de noviembre", diaC:"Jue 12-nov", hora:"10:30 de la mañana", box:"4", tipo:"Control crónico"};
   go("welcome");
 }
 go("welcome");
